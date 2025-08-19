@@ -5,8 +5,11 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'DeepAgent Dashboard',
-  description: 'Autonomous deployment monitoring and management dashboard',
+  title: 'DeepAgent - Autonomous Deployment Manager',
+  description: 'AI-powered autonomous deployment management and monitoring platform',
+  keywords: ['deployment', 'monitoring', 'automation', 'DevOps', 'AI'],
+  authors: [{ name: 'DeepAgent Team' }],
+  viewport: 'width=device-width, initial-scale=1',
 };
 
 export default function RootLayout({
@@ -16,7 +19,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div id="root">
+          {children}
+        </div>
+      </body>
     </html>
   );
 }
