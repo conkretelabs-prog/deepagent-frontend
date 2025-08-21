@@ -7,16 +7,22 @@
   "env": {
     "NEXT_PUBLIC_API_URL": "@api_url",
     "NEXT_PUBLIC_ENVIRONMENT": "@environment",
-    "NEXT_PUBLIC_SENTRY_DSN": "@sentry_dsn"
+    "NEXT_PUBLIC_SENTRY_DSN": "@sentry_dsn",
+    "NEXT_PUBLIC_ENABLE_ANALYTICS": "@enable_analytics",
+    "NEXT_PUBLIC_REFRESH_INTERVAL": "@refresh_interval"
   },
   "build": {
     "env": {
       "NEXT_PUBLIC_API_URL": "@api_url",
-      "NEXT_PUBLIC_ENVIRONMENT": "@environment"
+      "NEXT_PUBLIC_ENVIRONMENT": "@environment",
+      "NEXT_PUBLIC_ENABLE_ANALYTICS": "@enable_analytics"
     }
   },
   "functions": {
     "src/pages/api/**/*.js": {
+      "maxDuration": 30
+    },
+    "src/pages/api/**/*.ts": {
       "maxDuration": 30
     }
   },
@@ -30,11 +36,32 @@
         },
         {
           "key": "Access-Control-Allow-Methods",
-          "value": "GET, POST, PUT, DELETE, OPTIONS"
+          "value": "GET, POST, PUT, DELETE, OPTIONS, PATCH"
         },
         {
           "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type, Authorization"
+          "value": "Content-Type, Authorization, X-Requested-With"
+        },
+        {
+          "key": "Access-Control-Max-Age",
+          "value": "86400"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
         }
       ]
     }
@@ -43,6 +70,22 @@
     {
       "source": "/api/:path*",
       "destination": "$NEXT_PUBLIC_API_URL/api/:path*"
+    },
+    {
+      "source": "/health",
+      "destination": "$NEXT_PUBLIC_API_URL/health/"
     }
-  ]
+  ],
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/dashboard",
+      "permanent": false
+    }
+  ],
+  "regions": ["iad1", "sfo1"],
+  "github": {
+    "enabled": true,
+    "autoAlias": true
+  }
 }

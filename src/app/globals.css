@@ -1,3 +1,4 @@
+/* src/app/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -13,19 +14,7 @@
 }
 
 @layer components {
-  .card {
-    @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6;
-  }
-  
-  .btn-primary {
-    @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors duration-200;
-  }
-  
-  .btn-secondary {
-    @apply bg-gray-200 hover:bg-gray-300 text-gray-900 font-medium py-2 px-4 rounded-md transition-colors duration-200;
-  }
-  
-  .status-badge {
+  .status-indicator {
     @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
   }
   
@@ -33,83 +22,209 @@
     @apply bg-green-100 text-green-800;
   }
   
-  .status-warning {
-    @apply bg-yellow-100 text-yellow-800;
+  .status-unhealthy {
+    @apply bg-red-100 text-red-800;
   }
   
-  .status-error {
-    @apply bg-red-100 text-red-800;
+  .status-warning {
+    @apply bg-yellow-100 text-yellow-800;
   }
   
   .status-pending {
     @apply bg-blue-100 text-blue-800;
   }
+  
+  .metric-card {
+    @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6;
+  }
+  
+  .metric-progress {
+    @apply w-full bg-gray-200 rounded-full h-2;
+  }
+  
+  .metric-progress-bar {
+    @apply h-2 rounded-full transition-all duration-300 ease-in-out;
+  }
+  
+  .service-card {
+    @apply bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200;
+  }
+  
+  .deployment-card {
+    @apply bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200;
+  }
+  
+  .loading-skeleton {
+    @apply animate-pulse bg-gray-200 rounded;
+  }
+  
+  .btn-primary {
+    @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .btn-secondary {
+    @apply inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .btn-danger {
+    @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .alert {
+    @apply rounded-md p-4 mb-4;
+  }
+  
+  .alert-success {
+    @apply bg-green-50 border border-green-200 text-green-800;
+  }
+  
+  .alert-error {
+    @apply bg-red-50 border border-red-200 text-red-800;
+  }
+  
+  .alert-warning {
+    @apply bg-yellow-50 border border-yellow-200 text-yellow-800;
+  }
+  
+  .alert-info {
+    @apply bg-blue-50 border border-blue-200 text-blue-800;
+  }
 }
 
 @layer utilities {
-  .animate-pulse-slow {
-    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
-  .text-shadow {
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .gradient-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  
+  .glass-effect {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.8);
   }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f5f9;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-
-/* Loading animations */
-@keyframes shimmer {
-  0% {
-    background-position: -200px 0;
+/* Custom animations */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
   }
-  100% {
-    background-position: calc(200px + 100%) 0;
+  50% {
+    opacity: 0.5;
   }
 }
 
-.loading-shimmer {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200px 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-/* Chart customizations */
-.recharts-tooltip-wrapper {
-  @apply shadow-lg border border-gray-200 rounded-lg;
-}
-
-.recharts-tooltip-content {
-  @apply bg-white p-3 rounded-lg;
-}
-
-/* Responsive design helpers */
-@media (max-width: 640px) {
-  .mobile-stack {
-    @apply flex-col space-y-4 space-x-0;
+@keyframes bounce-subtle {
+  0%, 100% {
+    transform: translateY(0);
   }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 2s ease-in-out infinite;
 }
 
 /* Dark mode support (future enhancement) */
 @media (prefers-color-scheme: dark) {
   .dark-mode {
     @apply bg-gray-900 text-gray-100;
+  }
+  
+  .dark-mode .metric-card {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .dark-mode .service-card {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .dark-mode .deployment-card {
+    @apply bg-gray-800 border-gray-700;
+  }
+}
+
+/* Responsive design enhancements */
+@media (max-width: 640px) {
+  .metric-card {
+    @apply p-4;
+  }
+  
+  .service-card {
+    @apply p-3;
+  }
+  
+  .deployment-card {
+    @apply p-3;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    @apply bg-white text-black;
+  }
+  
+  .metric-card,
+  .service-card,
+  .deployment-card {
+    @apply border border-gray-400 shadow-none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .status-healthy {
+    @apply bg-green-200 text-green-900 border border-green-900;
+  }
+  
+  .status-unhealthy {
+    @apply bg-red-200 text-red-900 border border-red-900;
+  }
+  
+  .status-warning {
+    @apply bg-yellow-200 text-yellow-900 border border-yellow-900;
+  }
+  
+  .status-pending {
+    @apply bg-blue-200 text-blue-900 border border-blue-900;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse,
+  .animate-spin,
+  .animate-bounce,
+  .animate-pulse-slow,
+  .animate-bounce-subtle {
+    animation: none;
+  }
+  
+  .transition-all,
+  .transition-shadow,
+  .transition-colors {
+    transition: none;
   }
 }

@@ -1,14 +1,18 @@
-import DeploymentDashboard from '@/components/DeploymentDashboard';
+// src/app/page.tsx
+'use client';
 
-export default function Home() {
-  return (
-    <main>
-      <DeploymentDashboard />
-    </main>
-  );
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Dashboard from '@/components/Dashboard';
+
+export default function HomePage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    // Redirect to dashboard as the main interface
+    router.push('/dashboard');
+  }, [router]);
+
+  // Show dashboard while redirecting
+  return <Dashboard />;
 }
-
-export const metadata = {
-  title: 'DeepAgent - Autonomous Deployment Manager',
-  description: 'Real-time monitoring dashboard for autonomous deployment management',
-};
